@@ -66,6 +66,7 @@ class Livro (models.Model):
     editora = models.ForeignKey(Editora,blank = True)
     comentarios = models.ForeignKey(Comentario, blank = True)
     tags = models.ManyToManyField(Tag, blank=True)
+    image = models.ImageField()
     def __str__(self):
         return self.titulo
 
