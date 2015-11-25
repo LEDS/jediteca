@@ -53,22 +53,24 @@ class Livro (models.Model):
         (DIGITAL, 'DIGITAL'),
     )
 
-    titulo = models.CharField(max_length=200)
-    edicao = models.PositiveIntegerField()
-    ano = models.PositiveIntegerField()
+    titulo = models.CharField(max_length=200,db_index=True)
+    edicao = models.PositiveIntegerField(db_index=True)
+    ano = models.PositiveIntegerField(db_index=True)
     quantidade = models.PositiveIntegerField()
     sinopse = models.TextField(max_length=500)
     formato = models.CharField(max_length=2,
                                       choices=TIPO_LIVRO,
                                       default=FISICO)
     ativo = models.BooleanField(default=True)
-    autores = models.ManyToManyField(Autor)
-    editora = models.ForeignKey(Editora,blank = True)
+    autores = models.ManyToManyField(Autor,db_index=True)
+    editora = models.ForeignKey(Editora,blank = True,db_index=True)
     comentarios = models.ForeignKey(Comentario, blank = True)
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField(Tag, blank=True,db_index=True)
     image = models.ImageField()
+
     def __str__(self):
         return self.titulo
+
 
 class Reserva(models.Model):
     data = models.DateTimeField(auto_now = True)
