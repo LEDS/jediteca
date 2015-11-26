@@ -7,3 +7,5 @@ branches:
     - desenvolvimento
 install:
   - pip install -r requirements.txt
+script:
+  - python jediteca/manage.py test
