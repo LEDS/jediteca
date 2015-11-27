@@ -8,8 +8,9 @@ branches:
 install:
   - pip install -r requirements.txt
 before_script:
-– python manage.py –migrate
+  – python manage.py migrate
 script: 
   - python jediteca/manage.py test
   - nosetests
+  - sonar-runner
 
