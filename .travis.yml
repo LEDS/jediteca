@@ -10,7 +10,7 @@ install:
 before_script:
   – python manage.py migrate
 script: 
-  - python jediteca/manage.py test
-  - nosetests
+#  - python jediteca/manage.py test
+#  - nosetests
   - sonar-runner
 
