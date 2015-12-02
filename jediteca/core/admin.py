@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import *
 
 
@@ -16,13 +17,3 @@ admin.site.register(Editora)
 admin.site.register(Comentario)
 
 admin.site.register(Tag)
-
-admin.site.register(Reserva)
-
-admin.site.register(Emprestimo)
-
-admin.site.register(Leitor)
-
-
-
-# Register your models here.

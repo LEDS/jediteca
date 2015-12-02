@@ -8,16 +8,33 @@ class Tag (models.Model):
     def __str__(self):
         return self.texto
 
-class Leitor (AbstractBaseUser):
+class Comentario(models.Model):
 
-    email = models.EmailField()
-    nome_completo = models.CharField(max_length=100)
-    tags = models.ForeignKey(Tag,blank=True)
-
-    USERNAME_FIELD = 'email'
+    avaliacao = models.IntegerField()
+    comentario = models.CharField(max_length=250)
+    data_hora = models.DateTimeField(auto_now = True)
+    leitor = models.ForeignKey('auth.User')
 
     def __str__(self):
-        return self.username
+        return self.comentario
+
+class Item_Conhecimento(models.Model):
+    __abstract__  = True
+
+    tags = models.ManyToManyField(Tag, blank=True,db_index=True)
+    comentarios = models.ForeignKey(Comentario, blank = True)
+    descricao = models.TextField(max_length=500)
+
+
+class Link (Item_Conhecimento):
+
+    nome = models.CharField(max_length=100)
+    url = models.URLField()
+
+class Pessoa (Item_Conhecimento):
+    nome = models.CharField(max_length=100)
+    email = models.EmailField()
+    site = models.URLField()
 
 class Autor (models.Model):
     nome_completo = models.CharField(max_length=100)
@@ -32,18 +49,7 @@ class Editora(models.Model):
     def __str__(self):
         return self.nome
 
-
-class Comentario(models.Model):
-
-    avaliacao = models.IntegerField()
-    comentario = models.CharField(max_length=250)
-    data_hora = models.DateTimeField(auto_now = True)
-    leitor = models.ForeignKey(Leitor)
-
-    def __str__(self):
-        return self.comentario
-
-class Livro (models.Model):
+class Livro (Item_Conhecimento):
 
     FISICO = 'FI'
     DIGITAL = 'DI'
@@ -57,35 +63,17 @@ class Livro (models.Model):
     edicao = models.PositiveIntegerField(db_index=True)
     ano = models.PositiveIntegerField(db_index=True)
     quantidade = models.PositiveIntegerField()
-    sinopse = models.TextField(max_length=500)
     formato = models.CharField(max_length=2,
                                       choices=TIPO_LIVRO,
                                       default=FISICO)
     ativo = models.BooleanField(default=True)
     autores = models.ManyToManyField(Autor,db_index=True)
     editora = models.ForeignKey(Editora,blank = True,db_index=True)
-    comentarios = models.ForeignKey(Comentario, blank = True)
-    tags = models.ManyToManyField(Tag, blank=True,db_index=True)
     image = models.ImageField()
 
     def __str__(self):
         return self.titulo
 
-
-class Reserva(models.Model):
-    data = models.DateTimeField(auto_now = True)
-    ativo = models.BooleanField(default=True)
-    livro = models.ForeignKey(Livro)
-    leitor = models.ForeignKey(Leitor)
-
-    def __str__(self):
-        return self.livro
-
-class Emprestimo(models.Model):
-    data_emprestimo = models.DateTimeField(auto_now=True)
-    data_devolucao = models.DateTimeField()
-    leitor = models.ForeignKey(Leitor)
-    livro = models.ForeignKey(Livro)
-
-    def __str__(self):
-        return data_emprestimo
+    @staticmethod
+    def findAll(offset,limit,order_by):
+        return Livro.objects.order_by(order_by).all()[offset: limit]
