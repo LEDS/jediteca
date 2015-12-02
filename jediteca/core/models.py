@@ -19,22 +19,30 @@ class Comentario(models.Model):
         return self.comentario
 
 class Item_Conhecimento(models.Model):
-    __abstract__  = True
 
     tags = models.ManyToManyField(Tag, blank=True,db_index=True)
     comentarios = models.ForeignKey(Comentario, blank = True)
     descricao = models.TextField(max_length=500)
+    nome = models.CharField(max_length=100,db_index=True)
 
+
+    class Meta:
+        abstract = True
 
 class Link (Item_Conhecimento):
 
-    nome = models.CharField(max_length=100)
     url = models.URLField()
 
+    def __str__(self):
+        return self.nome
+
 class Pessoa (Item_Conhecimento):
-    nome = models.CharField(max_length=100)
+
     email = models.EmailField()
     site = models.URLField()
+
+    def __str__(self):
+        return self.nome
 
 class Autor (models.Model):
     nome_completo = models.CharField(max_length=100)
@@ -59,7 +67,6 @@ class Livro (Item_Conhecimento):
         (DIGITAL, 'DIGITAL'),
     )
 
-    titulo = models.CharField(max_length=200,db_index=True)
     edicao = models.PositiveIntegerField(db_index=True)
     ano = models.PositiveIntegerField(db_index=True)
     quantidade = models.PositiveIntegerField()

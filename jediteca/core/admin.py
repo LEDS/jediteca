@@ -5,8 +5,8 @@ from .models import *
 
 class LivroAdmin(admin.ModelAdmin):
 
-    list_display = ('titulo', 'edicao','formato', 'ativo')
-    search_fields = ['titulo']
+    list_display = ('nome', 'edicao','formato', 'ativo')
+    search_fields = ['nome']
 
 admin.site.register(Livro,LivroAdmin)
 
@@ -17,3 +17,7 @@ admin.site.register(Editora)
 admin.site.register(Comentario)
 
 admin.site.register(Tag)
+
+admin.site.register(Pessoa)
+
+admin.site.register(Link)

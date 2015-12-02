@@ -53,7 +53,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'jediteca2.urls'
+ROOT_URLCONF = 'jediteca.urls'
 
 TEMPLATES = [
     {
@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'jediteca2.wsgi.application'
+WSGI_APPLICATION = 'jediteca.wsgi.application'
 
 
 # Database
