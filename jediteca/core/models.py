@@ -18,7 +18,7 @@ class Comentario(models.Model):
     def __str__(self):
         return self.comentario
 
-class Item_Conhecimento(models.Model):
+class Item_conhecimento(models.Model):
 
     tags = models.ManyToManyField(Tag, blank=True,db_index=True)
     comentarios = models.ForeignKey(Comentario, blank = True)
@@ -29,14 +29,14 @@ class Item_Conhecimento(models.Model):
     class Meta:
         abstract = True
 
-class Link (Item_Conhecimento):
+class Link (Item_conhecimento):
 
     url = models.URLField()
 
     def __str__(self):
         return self.nome
 
-class Pessoa (Item_Conhecimento):
+class Pessoa (Item_conhecimento):
 
     email = models.EmailField()
     site = models.URLField()
@@ -57,7 +57,7 @@ class Editora(models.Model):
     def __str__(self):
         return self.nome
 
-class Livro (Item_Conhecimento):
+class Livro (Item_conhecimento):
 
     FISICO = 'FI'
     DIGITAL = 'DI'
@@ -82,5 +82,5 @@ class Livro (Item_Conhecimento):
         return self.titulo
 
     @staticmethod
-    def findAll(offset,limit,order_by):
+    def find_all(offset,limit,order_by):
         return Livro.objects.order_by(order_by).all()[offset: limit]
