@@ -18,7 +18,7 @@ class Comentario(models.Model):
     def __str__(self):
         return self.comentario
 
-class Item_conhecimento(models.Model):
+class ItemConhecimento(models.Model):
 
     tags = models.ManyToManyField(Tag, blank=True,db_index=True)
     comentarios = models.ForeignKey(Comentario, blank = True)
@@ -29,14 +29,14 @@ class Item_conhecimento(models.Model):
     class Meta:
         abstract = True
 
-class Link (Item_conhecimento):
+class Link (ItemConhecimento):
 
     url = models.URLField()
 
     def __str__(self):
         return self.nome
 
-class Pessoa (Item_conhecimento):
+class Pessoa (ItemConhecimento):
 
     email = models.EmailField()
     site = models.URLField()
@@ -57,7 +57,7 @@ class Editora(models.Model):
     def __str__(self):
         return self.nome
 
-class Livro (Item_conhecimento):
+class Livro (ItemConhecimento):
 
     FISICO = 'FI'
     DIGITAL = 'DI'
