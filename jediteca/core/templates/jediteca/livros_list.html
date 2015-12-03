@@ -1,0 +1,15 @@
+
+
+<html>
+  <head>
+    <title> Jediteca </title>
+  </head>
+
+  {% for livro in livros %}
+      <div>
+          <p>{{ livro.titulo }}</p>
+      </div>
+
+      <h1><a href="login">{{livro.edicao}}</a></h1>
+  {% endfor %}
+</html>
